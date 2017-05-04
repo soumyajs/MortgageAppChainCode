@@ -428,6 +428,9 @@ func (t *MORTGAGE) Query(stub shim.ChaincodeStubInterface, function string, args
 	}else if function == "getUserDetails" { 
 		t := MORTGAGE{}
 		return t.getUserDetails(stub, args)
+	} else if function == "getAllBorrowers" { 
+		t := MORTGAGE{}
+		return t.getAllBorrowers(stub, args)
 	} 
 	
 	return nil, nil
