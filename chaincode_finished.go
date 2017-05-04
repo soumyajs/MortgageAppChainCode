@@ -132,33 +132,33 @@ func (t *MORTGAGE) Init(stub shim.ChaincodeStubInterface, function string, args 
 //registerBorrower to register a user
 func (t *MORTGAGE) registerBorrower(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
-if len(args) != 12 {
+if len(args) != 18 {
 			return nil, fmt.Errorf("Incorrect number of arguments. Expecting 12. Got: %d.", len(args))
 		}
 		
 		uid:=args[0]
-		gender:=args[2]
-		firstName:=args[3]
-		lastName:=args[4]
-		dob:=args[5]
-		email:=args[6]
-		phone:=args[7]
-		address:=args[8]
-		city:=args[9]
-		zip:=args[10]
-		lenderId:=args[11]
-		lenderName:=args[12]
-		productName:=args[13]
-		loanAmount:=args[14]
-		interestRate:=args[15]
-		documentsSubmitted:=args[16]
-		switchUserFlag:=args[17]
-		switchLenderId	:=args[18]		
+		gender:=args[1]
+		firstName:=args[2]
+		lastName:=args[3]
+		dob:=args[4]
+		email:=args[5]
+		phone:=args[6]
+		address:=args[7]
+		city:=args[8]
+		zip:=args[9]
+		lenderId:=args[10]
+		lenderName:=args[11]
+		productName:=args[12]
+		loanAmount:=args[13]
+		interestRate:=args[14]
+		documentsSubmitted:=args[15]
+		switchUserFlag:=args[16]
+		switchLenderId	:=args[17]		
 		//assignerOrg1, err := stub.GetState(args[19])
 		//assignerOrg := string(assignerOrg1)
 		
 		//createdBy:=assignerOrg
-		totalPoint:="0"
+		//totalPoint:="0"
 
 
 		// Insert a row
@@ -178,8 +178,7 @@ if len(args) != 12 {
 				&shim.Column{Value: &shim.Column_String_{String_: lenderName}},
 				&shim.Column{Value: &shim.Column_String_{String_: productName}},
 				&shim.Column{Value: &shim.Column_String_{String_: loanAmount}},
-				&shim.Column{Value: &shim.Column_String_{String_: interestRate}},
-				&shim.Column{Value: &shim.Column_String_{String_: totalPoint}},
+				&shim.Column{Value: &shim.Column_String_{String_: interestRate}},				
 				&shim.Column{Value: &shim.Column_String_{String_: documentsSubmitted}},
 				&shim.Column{Value: &shim.Column_String_{String_: switchUserFlag}},
 				&shim.Column{Value: &shim.Column_String_{String_: switchLenderId}},
