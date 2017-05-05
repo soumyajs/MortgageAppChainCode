@@ -250,8 +250,8 @@ func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) 
 
 	// Get the row pertaining to this Email
 	var columns []shim.Column
-	col1 := shim.Column{Value: &shim.Column_String_{String_: Email}}
-	columns = append(columns, col1)
+	//col1 := shim.Column{Value: &shim.Column_String_{String_: Email}}
+	//columns = append(columns, col1)
 
 	//row, err := stub.GetRow("BorrowerDetails", columns)
 	//if err != nil {
