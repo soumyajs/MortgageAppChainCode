@@ -238,12 +238,6 @@ func (t *MORTGAGE) getUserDetails(stub shim.ChaincodeStubInterface, args []strin
 
 }
 
-
-
-
-
-
-
 // to get the deatils of a borrower against email (for internal testing, irrespective of org)
 func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
@@ -261,13 +255,13 @@ func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) 
 
 	row, err := stub.GetRow("BorrowerDetails", columns)
 	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get the data for the application " + email + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get the data for the application 1 " + email + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
 	// GetRows returns empty message if key does not exist
 	if len(row.Columns) == 0 {
-		jsonResp := "{\"Error\":\"Failed to get the data for the application " + email + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get the data for the application 2 " + email + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
