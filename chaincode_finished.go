@@ -245,48 +245,55 @@ func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) 
 		return nil, errors.New("Incorrect number of arguments. Expecting uid to query")
 	}
 
-	email := args[0]
+	Email := args[0]
 	
 
 	// Get the row pertaining to this Email
 	var columns []shim.Column
-	col1 := shim.Column{Value: &shim.Column_String_{String_: email}}
+	col1 := shim.Column{Value: &shim.Column_String_{String_: Email}}
 	columns = append(columns, col1)
 
-	row, err := stub.GetRow("BorrowerDetails", columns)
-	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get the data for the application 1 " + email + "\"}"
-		return nil, errors.New(jsonResp)
-	}
+	//row, err := stub.GetRow("BorrowerDetails", columns)
+	//if err != nil {
+	//	jsonResp := "{\"Error\":\"Failed to get the data for the application 1 " + Email + "\"}"
+	//	return nil, errors.New(jsonResp)
+	//}
 
 	// GetRows returns empty message if key does not exist
-	if len(row.Columns) == 0 {
-		jsonResp := "{\"Error\":\"Failed to get the data for the application 2 " + email + "\"}"
-		return nil, errors.New(jsonResp)
+	//if len(row.Columns) == 0 {
+	//	jsonResp := "{\"Error\":\"Failed to get the data for the application 2 " + Email + "\"}"
+	//	return nil, errors.New(jsonResp)
+	//}
+	rows, err := stub.GetRows("BorrowerDetails", columns)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to retrieve row")
 	}
-
-	
-	res2E := BorrowerDetails{}
-	
-	res2E.uid = row.Columns[0].GetString_()
-	res2E.Gender = row.Columns[1].GetString_()
-	res2E.FirstName = row.Columns[2].GetString_()
-	res2E.LastName = row.Columns[3].GetString_()
-	res2E.Dob = row.Columns[4].GetString_()
-	res2E.Email = row.Columns[5].GetString_()
-	res2E.Phone = row.Columns[6].GetString_()
-	res2E.Address = row.Columns[7].GetString_()
-	res2E.City = row.Columns[8].GetString_()
-	res2E.Zip = row.Columns[9].GetString_()
-	res2E.LenderId = row.Columns[10].GetString_()
-	res2E.LenderName = row.Columns[11].GetString_()
-	res2E.ProductName = row.Columns[12].GetString_()
-	res2E.LoanAmount = row.Columns[13].GetString_()
-	res2E.InterestRate = row.Columns[14].GetString_()
-	res2E.DocumentsSubmitted = row.Columns[15].GetString_()
-	res2E.SwitchUserFlag = row.Columns[16].GetString_()
-	res2E.SwitchLenderId = row.Columns[17].GetString_()
-	
+	res2E := []*BorrowerDetails{}
+	for row := range rows {	
+		newApp:= new(BorrowerDetails)
+		newApp.uid = row.Columns[0].GetString_()
+		newApp.Gender = row.Columns[1].GetString_()
+		newApp.FirstName = row.Columns[2].GetString_()
+		newApp.LastName = row.Columns[3].GetString_()
+		newApp.Dob = row.Columns[4].GetString_()
+		newApp.Email = row.Columns[5].GetString_()
+		newApp.Phone = row.Columns[6].GetString_()
+		newApp.Address = row.Columns[7].GetString_()
+		newApp.City = row.Columns[8].GetString_()
+		newApp.Zip = row.Columns[9].GetString_()
+		newApp.LenderId = row.Columns[10].GetString_()
+		newApp.LenderName = row.Columns[11].GetString_()
+		newApp.ProductName = row.Columns[12].GetString_()
+		newApp.LoanAmount = row.Columns[13].GetString_()
+		newApp.InterestRate = row.Columns[14].GetString_()
+		newApp.DocumentsSubmitted = row.Columns[15].GetString_()
+		newApp.SwitchUserFlag = row.Columns[16].GetString_()
+		newApp.SwitchLenderId = row.Columns[17].GetString_()
+		
+		if newApp.Email == Email{
+		res2E=append(res2E,newApp)		
+		}	
+	}
     mapB, _ := json.Marshal(res2E)
     fmt.Println(string(mapB))
 	
