@@ -20,7 +20,7 @@ type MORTGAGE struct {
 // BorrowerDetails is for storing User Details
 
 type BorrowerDetails struct{	
-	uid string `json:"uid"`	
+	UserID string `json:"uid"`	
 	Gender string `json:"gender"`
 	FirstName string `json:"firstName"`
 	LastName string `json:"lastName"`
@@ -225,7 +225,7 @@ func (t *MORTGAGE) registerBorrower(stub shim.ChaincodeStubInterface, args []str
 fmt.Println("no of argumrents  %d",len(args) )
 
 
-	uid:=args[0]
+		uid:=args[0]
 	gender:=args[1]
 	firstName:=args[2]
 	lastName:=args[3]
@@ -309,20 +309,25 @@ fmt.Println("Hello, World!!!")
 		return nil, errors.New(jsonResp)
 	}
 
-	// GetRows returns empty message if key does not exist	
+	// GetRows returns empty message if key does not exist
+	
+	
+
+	
 	res2E :=  []*LenderDetails{}
 	for row := range rows { 
-		newApp:= new(LenderDetails)
-		newApp.LenderId = row.Columns[0].GetString_()
-		newApp.LenderName = row.Columns[1].GetString_()
-		newApp.ProductId = row.Columns[2].GetString_()
-		newApp.ProductName = row.Columns[3].GetString_()
-		newApp.ProductType = row.Columns[4].GetString_()
-		newApp.Rate = row.Columns[5].GetString_()
-		if newApp.ProductId == productId{
-			res2E=append(res2E,newApp)		
-		}		
-	}
+	newApp:= new(LenderDetails)
+	newApp.LenderId = row.Columns[0].GetString_()
+	newApp.LenderName = row.Columns[1].GetString_()
+	newApp.ProductId = row.Columns[2].GetString_()
+	newApp.ProductName = row.Columns[3].GetString_()
+	newApp.ProductType = row.Columns[4].GetString_()
+	newApp.Rate = row.Columns[5].GetString_()
+	if newApp.ProductId == productId{
+		res2E=append(res2E,newApp)		
+		}	
+		
+		}
 	
 	
     mapB, _ := json.Marshal(res2E)
@@ -377,7 +382,6 @@ fmt.Println("Hello, World!!!")
 	return mapB, nil
 
 }
-
 // to get the deatils of a borrower against email (for internal testing, irrespective of org)
 func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
@@ -397,7 +401,7 @@ func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) 
 	res2E := []*BorrowerDetails{}
 	for row := range rows {	
 		newApp:= new(BorrowerDetails)
-		newApp.uid = row.Columns[0].GetString_()
+		newApp.UserID = row.Columns[0].GetString_()
 		newApp.Gender = row.Columns[1].GetString_()
 		newApp.FirstName = row.Columns[2].GetString_()
 		newApp.LastName = row.Columns[3].GetString_()
@@ -426,7 +430,6 @@ func (t *MORTGAGE) getBorrower(stub shim.ChaincodeStubInterface, args []string) 
 	return mapB, nil
 
 }
-
 // to get the deatils of a product against borrowerId 
 func (t *MORTGAGE) fetchBorrowerDetails(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
@@ -456,9 +459,9 @@ fmt.Println("Hello, World!!!")
 
 	
 	res2E :=  BorrowerDetails{}
-
+fmt.Println("user id  :!!!!!!!!!!!!%s", row.Columns[0].GetString_())
 	
-	res2E.uid = row.Columns[0].GetString_()
+	res2E.UserID = row.Columns[0].GetString_()
 	res2E.Gender = row.Columns[1].GetString_()
 	res2E.FirstName = row.Columns[2].GetString_()
 	res2E.LastName = row.Columns[3].GetString_()
@@ -497,7 +500,9 @@ fmt.Println("Hello, World!")
 	fmt.Println("Hello, World!!")
 
 	
-var colum []shim.Column
+	
+		
+	var colum []shim.Column
 	col1 := shim.Column{Value: &shim.Column_String_{String_: borrowerId}}
 	
 	colum = append(colum, col1)
@@ -509,9 +514,10 @@ fmt.Println("Hello, World!!!")
 		jsonResp := "{\"Error\":\"Failed getting the details of the borrower with id  " + borrowerId + "\"}"
 		return nil, errors.New(jsonResp)
 	}
-		
-		
 
+	// GetRows returns empty message if key does not exist
+	
+	fmt.Println("number of columsn :!!!!!!!!!!!!", len(row.Columns))
 	
 	
 	
